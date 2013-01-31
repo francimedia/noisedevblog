@@ -1,1 +1,1 @@
-web:    sh www/application/scripts/web-boot.sh
+web:    sh www/scripts/web-boot.sh
