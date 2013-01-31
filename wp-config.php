@@ -21,17 +21,40 @@ define('WP_CONTENT_DIR', $_SERVER['DOCUMENT_ROOT'] . '/wp-content');
 define('WP_CONTENT_URL', 'http://' . $_SERVER['SERVER_NAME'] . '/wp-content');
 
 // ** MySQL settings - You can get this info from your web host ** //
+
+if (isset($_SERVER["CLEARDB_DATABASE_URL"])) {
+
+	/** Get Database URL from heroku config */
+	$db = parse_url($_SERVER["CLEARDB_DATABASE_URL"]);
+
+	/** The name of the database for WordPress */
+	define("DB_NAME", trim($db["path"],"/"));
+
+	/** MySQL database username */
+	define("DB_USER", $db["user"]);
+
+	/** MySQL database password */
+	define("DB_PASSWORD", $db["pass"]);
+
+	/** MySQL hostname */
+	define("DB_HOST", $db["host"]);
+}
+else {
+ 	die("Your heroku CLEARDB_DATABASE_URL does not appear to be correctly specified.");
+}
+
+
 /** The name of the database for WordPress */
-define('DB_NAME', 'database_name_here');
+define('DB_NAME', DB_NAME);
 
 /** MySQL database username */
-define('DB_USER', 'username_here');
+define('DB_USER', DB_USER);
 
 /** MySQL database password */
-define('DB_PASSWORD', 'password_here');
+define('DB_PASSWORD', DB_PASSWORD);
 
 /** MySQL hostname */
-define('DB_HOST', 'localhost');
+define('DB_HOST', DB_HOST);
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
